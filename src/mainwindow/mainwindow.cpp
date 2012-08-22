@@ -677,6 +677,6 @@ void MainWindow::saveProject()
 void MainWindow::openProject(QString file)
 {
     qDebug() << "load file = " << file;
-}
 
+}
 ///-------------------------------------------------------------------------
