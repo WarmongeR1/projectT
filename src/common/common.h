@@ -2,8 +2,12 @@
 #define __COMMON_H
 
 #include <QStringList>
+#include <QUrl>
+#include <QFileInfo>
 class QTextCodec;
 class QString;
+
+
 /**
   @funcion
   Parse function
@@ -81,4 +85,10 @@ QString getTextFromFile(QString filepath, QString encoding="UTF-8");
   */
  QTextCodec *getCodecOfEncoding(QString encoding);
 
+
+ QString getParamProject(QString *mtext, QString param);
+ QString *deleteTagText(QString *str, QString tag);
+ QString unurlifyFileName(const QString &fileName);		//remove "file:"
+ QString urlifyFileName(const QString &fileName);		//add "file:"
+ QString relatifyFileName(QString url, QString path);	//returns path like ../../images/pict.jpg Difference from QDir::relativeFilePath() in: it adds "./" and removes "file:"
 #endif // end __COMMON_H

@@ -24,14 +24,14 @@
 ** Edit: Sapronov Alexander
 ****************************************************************************/
 
+#include "ui_mainwindow.h"
+#include "ui_inserthtmldialog.h"
 
 #include "mainwindow.h"
 #include "highlighter.h"
-#include "defines.h"
-#include "about.h"
-
-#include "ui_mainwindow.h"
-#include "ui_inserthtmldialog.h"
+#include "defines.h" /// defines
+#include "about.h" /// about dialog
+#include "common.h" /// common function. example: parse project file
 
 #include <QtGui>
 #include <QtWebKit>
@@ -76,6 +76,8 @@ MainWindow::MainWindow(QWidget *parent)
     changeZoom(100);
 
     this->showMaximized();
+
+    debug();
 }
 ///-------------------------------------------------------------------------
 MainWindow::~MainWindow()
@@ -186,7 +188,8 @@ void MainWindow::init()
 ///-------------------------------------------------------------------------
 void MainWindow::debug()
 {
-
+    QString projectFileForOpen = "/home/files/Develop/git/projectT/master/projectT-build-desktop/build/bin/example.qhp";
+    openProject(projectFileForOpen);
 }
 ///-------------------------------------------------------------------------
 bool MainWindow::maybeSave()
@@ -671,12 +674,12 @@ void MainWindow::openProject()
 ///-------------------------------------------------------------------------
 void MainWindow::saveProject()
 {
-
+    qDebug() << "save Project";
 }
 ///-------------------------------------------------------------------------
 void MainWindow::openProject(QString file)
 {
-    qDebug() << "load file = " << file;
-
+//    qDebug() << "load file = " << file;
+    parseProjectFile(file);
 }
 ///-------------------------------------------------------------------------
