@@ -36,6 +36,7 @@
 #include <QtGui>
 #include <QtWebKit>
 #include <QDesktopServices> /// for open home page
+#include <QStandardItemModel>
 
 // debug
 #include <QDebug>
@@ -74,6 +75,8 @@ MainWindow::MainWindow(QWidget *parent)
     adjustSource();
     setWindowModified(false);
     changeZoom(100);
+
+
 
     this->showMaximized();
 
@@ -681,5 +684,37 @@ void MainWindow::openProject(QString file)
 {
 //    qDebug() << "load file = " << file;
     parseProjectFile(file);
+
+
+
+//    QStandardItemModel model( 5, 2, this);
+//    for( int r=0; r<5; r++ )
+//      for( int c=0; c<2; c++)
+//      {
+//        QStandardItem *item = new QStandardItem( QString("Row:%0, Column:%1").arg(r).arg(c) );
+
+//        if( c == 0 )
+//          for( int i=0; i<3; i++ )
+//          {
+//            QStandardItem *child = new QStandardItem( QString("Item %0").arg(i) );
+//            child->setEditable( false );
+//            item->appendRow( child );
+//          }
+
+//        model.setItem(r, c, item);
+//      }
+//    ui->treeView->setModel(&model);
+
+//    QStandardItemModel model;
+//    QStandardItem *parentItem = model.invisibleRootItem();
+//    for (int i = 0; i < 4; ++i) {
+//        QStandardItem *item = new QStandardItem(QString("item %0").arg(i));
+//        parentItem->appendRow(item);
+//        parentItem = item;
+//    }
+
+//    ui->treeView->setModel(&model);
+//    ui->treeView->reset();
+
 }
 ///-------------------------------------------------------------------------

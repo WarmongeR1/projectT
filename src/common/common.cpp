@@ -46,14 +46,15 @@ QTextCodec * getCodecOfEncoding(QString encoding)
     return codec;
 }
 ///---------------------------------------------
-QString parseProjectFile(QString filename)
+QStandardItemModel* parseProjectFile(QString filename)
 {
     QString text = getTextFromFile(filename);
 //    qDebug() << "namespace = " << getNamespace(&text);
 //    qDebug() << "virtualFolder=  " << getVirtualFolder(&text);
 //    qDebug() << "files = " << parseFiles(&text);
-    QString str = "";
-    return str;
+//    QString str = "";
+    QStandardItemModel *model;
+    return model;
 }
 ///---------------------------------------------
 QString getNamespace(QString *mtext)

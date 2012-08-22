@@ -6,6 +6,7 @@
 #include <QFileInfo>
 class QTextCodec;
 class QString;
+class QStandardItemModel;
 
 
 /**
@@ -15,7 +16,7 @@ class QString;
   step number *: parse text, and delete plock parse
   @return text  QString
   */
-QString parseProjectFile(QString filename);
+QStandardItemModel* parseProjectFile(QString filename);
 
 /**
   @function
