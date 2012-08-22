@@ -29,12 +29,14 @@
 #include "highlighter.h"
 
 
-
 #if QT_VERSION < 0x040500
 #error You must use Qt >= 4.5.0!
 #endif
 
-
+namespace Ui
+{
+     class MainWindow;
+}
 class Ui_MainWindow;
 class Ui_Dialog;
 class AboutDialog;
@@ -155,7 +157,7 @@ private slots:
     void showHomePage();
 
 private:
-    Ui_MainWindow *ui;
+    Ui::MainWindow *ui;
     QString fileName;
     bool sourceDirty;
     QLabel *zoomLabel;

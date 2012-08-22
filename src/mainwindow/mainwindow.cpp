@@ -30,7 +30,7 @@
 #include "defines.h"
 #include "about.h"
 
-#include "ui_htmleditor.h"
+#include "ui_mainwindow.h"
 #include "ui_inserthtmldialog.h"
 
 #include <QtGui>
@@ -46,7 +46,7 @@
 
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent)
-        , ui(new Ui_MainWindow)
+        , ui(new Ui::MainWindow)
         , sourceDirty(true)
         , highlighter(0)
         , ui_dialog(0)
@@ -78,11 +78,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     init();
     createConnect();
-
-    // necessary to sync our actions
-    connect(ui->webView->page(), SIGNAL(selectionChanged()), SLOT(adjustActions()));
-
-    connect(ui->webView->page(), SIGNAL(contentsChanged()), SLOT(adjustSource()));
     ui->webView->setFocus();
 
     setCurrentFileName(QString());
@@ -170,6 +165,12 @@ void MainWindow::createConnect()
     connect(ui->actionExit, SIGNAL(triggered()), SLOT(close()));
     connect(ui->actionFileOpenProject, SIGNAL(triggered()), SLOT(openProject()));
     connect(ui->actionFileSaveProject, SIGNAL(triggered()), SLOT(saveProject()));
+
+
+    // necessary to sync our actions
+    connect(ui->webView->page(), SIGNAL(selectionChanged()), SLOT(adjustActions()));
+
+    connect(ui->webView->page(), SIGNAL(contentsChanged()), SLOT(adjustSource()));
 }
 ///-------------------------------------------------------------------------
 void MainWindow::init()
