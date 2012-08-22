@@ -80,6 +80,13 @@ private slots:
       Show dialog for open project (qhp file)
       */
     void openProject();
+
+    /**
+      @fucntion
+      Open project. Load tree, parse.
+      @param file   qhp file project
+      */
+    void openProject(QString file);
     /**
       @function
       Save project (export qhp and other file)

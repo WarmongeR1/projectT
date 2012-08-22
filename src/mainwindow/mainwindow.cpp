@@ -35,7 +35,10 @@
 
 #include <QtGui>
 #include <QtWebKit>
-#include <QDesktopServices>
+#include <QDesktopServices> /// for open home page
+
+// debug
+#include <QDebug>
 
 #define FORWARD_ACTION(action1, action2) \
     connect(action1, SIGNAL(triggered()), \
@@ -53,32 +56,9 @@ MainWindow::MainWindow(QWidget *parent)
         , insertHtmlDialog(0)
 {
     ui->setupUi(this);
-    ui->tabWidget->setTabText(0, "Normal View");
-    ui->tabWidget->setTabText(1, "HTML Source");
-    connect(ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(changeTab(int)));
-//    resize(600, 600);
-
-    highlighter = new Highlighter(ui->plainTextEdit->document());
-
-    QWidget *spacer = new QWidget(this);
-    spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
-    ui->standardToolBar->insertWidget(ui->actionZoomOut, spacer);
-
-    zoomLabel = new QLabel;
-    ui->standardToolBar->insertWidget(ui->actionZoomOut, zoomLabel);
-
-    zoomSlider = new QSlider(this);
-    zoomSlider->setOrientation(Qt::Horizontal);
-    zoomSlider->setMaximumWidth(150);
-    zoomSlider->setRange(25, 400);
-    zoomSlider->setSingleStep(25);
-    zoomSlider->setPageStep(100);
-    connect(zoomSlider, SIGNAL(valueChanged(int)), SLOT(changeZoom(int)));
-    ui->standardToolBar->insertWidget(ui->actionZoomIn, zoomSlider);
 
     init();
     createConnect();
-    ui->webView->setFocus();
 
     setCurrentFileName(QString());
 
@@ -176,6 +156,32 @@ void MainWindow::createConnect()
 void MainWindow::init()
 {
     gui_about = new AboutDialog(this);
+
+    ui->tabWidget->setTabText(0, "Normal View");
+    ui->tabWidget->setTabText(1, "HTML Source");
+    connect(ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(changeTab(int)));
+//    resize(600, 600);
+
+    highlighter = new Highlighter(ui->plainTextEdit->document());
+
+    QWidget *spacer = new QWidget(this);
+    spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+    ui->standardToolBar->insertWidget(ui->actionZoomOut, spacer);
+
+    zoomLabel = new QLabel;
+    ui->standardToolBar->insertWidget(ui->actionZoomOut, zoomLabel);
+
+    zoomSlider = new QSlider(this);
+    zoomSlider->setOrientation(Qt::Horizontal);
+    zoomSlider->setMaximumWidth(150);
+    zoomSlider->setRange(25, 400);
+    zoomSlider->setSingleStep(25);
+    zoomSlider->setPageStep(100);
+    connect(zoomSlider, SIGNAL(valueChanged(int)), SLOT(changeZoom(int)));
+    ui->standardToolBar->insertWidget(ui->actionZoomIn, zoomSlider);
+
+    ui->webView->setFocus();
+
 }
 ///-------------------------------------------------------------------------
 void MainWindow::debug()
@@ -656,7 +662,10 @@ void MainWindow::showHomePage()
 ///-------------------------------------------------------------------------
 void MainWindow::openProject()
 {
-
+    QString fn = QFileDialog::getOpenFileName(this, tr("Open File..."),
+                 QString(), tr("Doc-files (*.qhp);;All Files (*)"));
+    if (!fn.isEmpty())
+        openProject(fn);
 }
 
 ///-------------------------------------------------------------------------
@@ -665,5 +674,9 @@ void MainWindow::saveProject()
 
 }
 ///-------------------------------------------------------------------------
+void MainWindow::openProject(QString file)
+{
+    qDebug() << "load file = " << file;
+}
 
 ///-------------------------------------------------------------------------
