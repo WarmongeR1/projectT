@@ -22,7 +22,7 @@
 ****************************************************************************/
 
 
-#include "htmleditor.h"
+#include "mainwindow.h"
 #include <QApplication>
 
 int main(int argc, char ** argv)
@@ -30,7 +30,7 @@ int main(int argc, char ** argv)
     Q_INIT_RESOURCE(resources);
 
     QApplication a(argc, argv);
-    HtmlEditor editor;
+    MainWindow editor;
     editor.show();
     return a.exec();
 }

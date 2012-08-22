@@ -88,6 +88,9 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
+    <addaction name="actionFileOpenProject"/>
+    <addaction name="actionFileSaveProject"/>
+    <addaction name="separator"/>
     <addaction name="actionFileNew"/>
     <addaction name="actionFileOpen"/>
     <addaction name="actionFileSave"/>
@@ -166,17 +169,20 @@
     <addaction name="actionAbout"/>
     <addaction name="actionAboutQt"/>
     <addaction name="separator"/>
-    <addaction name="actionHomePage"/>
+    <addaction name="actionAboutHomePage"/>
    </widget>
    <widget class="QMenu" name="menu_Settings">
     <property name="title">
      <string>Settings</string>
     </property>
+    <addaction name="actionSettingsSettings"/>
    </widget>
    <widget class="QMenu" name="menu_Language">
     <property name="title">
      <string>Language</string>
     </property>
+    <addaction name="actionLanguageRussian"/>
+    <addaction name="actionLanguageEnglish"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Edit"/>
@@ -608,7 +614,7 @@
     <string>Insert HTML</string>
    </property>
   </action>
-  <action name="actionHomePage">
+  <action name="actionAboutHomePage">
    <property name="text">
     <string>Home page</string>
    </property>
@@ -621,6 +627,31 @@
   <action name="actionAboutQt">
    <property name="text">
     <string>About Qt</string>
+   </property>
+  </action>
+  <action name="actionLanguageRussian">
+   <property name="text">
+    <string>Russian</string>
+   </property>
+  </action>
+  <action name="actionLanguageEnglish">
+   <property name="text">
+    <string>English</string>
+   </property>
+  </action>
+  <action name="actionSettingsSettings">
+   <property name="text">
+    <string>Settings</string>
+   </property>
+  </action>
+  <action name="actionFileOpenProject">
+   <property name="text">
+    <string>Open project</string>
+   </property>
+  </action>
+  <action name="actionFileSaveProject">
+   <property name="text">
+    <string>Save project</string>
    </property>
   </action>
  </widget>

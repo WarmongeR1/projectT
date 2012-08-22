@@ -46,13 +46,13 @@ class QUrl;
 
 
 
-class HtmlEditor : public QMainWindow
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    HtmlEditor(QWidget *parent = 0);
-    ~HtmlEditor();
+    MainWindow(QWidget *parent = 0);
+    ~MainWindow();
 
 protected:
     virtual void closeEvent(QCloseEvent *e);
@@ -72,10 +72,40 @@ private:
     bool queryCommandState(const QString&);
 
 private slots:
+
+    /**
+      @function
+      Show dialog for open project (qhp file)
+      */
+    void openProject();
+    /**
+      @function
+      Save project (export qhp and other file)
+      */
+    void saveProject();
+    /**
+      @function
+      Function for new html file
+      */
     void fileNew();
+
+    /**
+      @function
+      Function for open html file
+      */
     void fileOpen();
+    /**
+      @function
+      Function for save file
+      */
     bool fileSave();
+    /**
+      @function
+      Function for save as file
+      */
     bool fileSaveAs();
+
+
     void editSelectAll();
     void styleParagraph();
     void styleHeading1();
@@ -86,6 +116,7 @@ private slots:
     void styleHeading6();
     void stylePreformatted();
     void styleAddress();
+
     void formatStrikeThrough();
     void formatAlignLeft();
     void formatAlignCenter();
@@ -133,7 +164,7 @@ private:
     Ui_Dialog *ui_dialog;
     QDialog *insertHtmlDialog;
 
-    AboutDialog *gui_about;
+    AboutDialog *gui_about; // about dialog
 
 };
 

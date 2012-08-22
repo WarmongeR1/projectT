@@ -14,7 +14,7 @@ INCLUDEPATH = \
     src/main \
     src/dialogs/about \
     src/highlighter \
-    src/htmleditor \
+    src/mainwindow \
     src/common \
     src/defines
 
@@ -24,27 +24,27 @@ DEPENDPATH += \
     src/dialogs/about \
     src/dialogs/ \
     src/highlighter \
-    src/htmleditor \
+    src/mainwindow \
     src/common \
-    src/defines 
+    src/defines
 
 
 HEADERS   += \
-	htmleditor.h \
+	mainwindow.h \
 	highlighter.h \
 	about.h \
 	common.h \
     defines.h
 
 SOURCES   += \
-	htmleditor.cpp \
+	mainwindow.cpp \
 	main.cpp \
 	highlighter.cpp \
 	about.cpp \
 	common.cpp
 
 FORMS     += \
-	htmleditor.ui \
+	mainwindow.ui \
 	inserthtmldialog.ui \
 	about.ui
 

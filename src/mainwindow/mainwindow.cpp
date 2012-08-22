@@ -25,7 +25,7 @@
 ****************************************************************************/
 
 
-#include "htmleditor.h"
+#include "mainwindow.h"
 #include "highlighter.h"
 #include "defines.h"
 #include "about.h"
@@ -44,7 +44,7 @@
             SIGNAL(changed()), SLOT(adjustActions()));
 
 
-HtmlEditor::HtmlEditor(QWidget *parent)
+MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent)
         , ui(new Ui_MainWindow)
         , sourceDirty(true)
@@ -56,7 +56,7 @@ HtmlEditor::HtmlEditor(QWidget *parent)
     ui->tabWidget->setTabText(0, "Normal View");
     ui->tabWidget->setTabText(1, "HTML Source");
     connect(ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(changeTab(int)));
-    resize(600, 600);
+//    resize(600, 600);
 
     highlighter = new Highlighter(ui->plainTextEdit->document());
 
@@ -99,21 +99,19 @@ HtmlEditor::HtmlEditor(QWidget *parent)
     adjustSource();
     setWindowModified(false);
     changeZoom(100);
+
+    this->showMaximized();
 }
 ///-------------------------------------------------------------------------
-HtmlEditor::~HtmlEditor()
+MainWindow::~MainWindow()
 {
     delete ui;
     delete ui_dialog;
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::createConnect()
+void MainWindow::createConnect()
 {
-    connect(ui->actionFileNew, SIGNAL(triggered()), SLOT(fileNew()));
-    connect(ui->actionFileOpen, SIGNAL(triggered()), SLOT(fileOpen()));
-    connect(ui->actionFileSave, SIGNAL(triggered()), SLOT(fileSave()));
-    connect(ui->actionFileSaveAs, SIGNAL(triggered()), SLOT(fileSaveAs()));
-    connect(ui->actionExit, SIGNAL(triggered()), SLOT(close()));
+
     connect(ui->actionInsertImage, SIGNAL(triggered()), SLOT(insertImage()));
     connect(ui->actionCreateLink, SIGNAL(triggered()), SLOT(createLink()));
     connect(ui->actionInsertHtml, SIGNAL(triggered()), SLOT(insertHtml()));
@@ -161,21 +159,30 @@ void HtmlEditor::createConnect()
 
     /// menu about
     connect(ui->actionAbout, SIGNAL(triggered()), this ,SLOT(showAbout()));
-    connect(ui->actionHomePage, SIGNAL(triggered()), this ,SLOT(showHomePage()));
+    connect(ui->actionAboutHomePage, SIGNAL(triggered()), this ,SLOT(showHomePage()));
     connect(ui->actionAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+
+    /// menu file
+    connect(ui->actionFileNew, SIGNAL(triggered()), SLOT(fileNew()));
+    connect(ui->actionFileOpen, SIGNAL(triggered()), SLOT(fileOpen()));
+    connect(ui->actionFileSave, SIGNAL(triggered()), SLOT(fileSave()));
+    connect(ui->actionFileSaveAs, SIGNAL(triggered()), SLOT(fileSaveAs()));
+    connect(ui->actionExit, SIGNAL(triggered()), SLOT(close()));
+    connect(ui->actionFileOpenProject, SIGNAL(triggered()), SLOT(openProject()));
+    connect(ui->actionFileSaveProject, SIGNAL(triggered()), SLOT(saveProject()));
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::init()
+void MainWindow::init()
 {
     gui_about = new AboutDialog(this);
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::debug()
+void MainWindow::debug()
 {
 
 }
 ///-------------------------------------------------------------------------
-bool HtmlEditor::maybeSave()
+bool MainWindow::maybeSave()
 {
     if (!isWindowModified())
         return true;
@@ -193,7 +200,7 @@ bool HtmlEditor::maybeSave()
     return true;
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::fileNew()
+void MainWindow::fileNew()
 {
     if (maybeSave()) {
         ui->webView->setHtml("<p></p>");
@@ -217,7 +224,7 @@ void HtmlEditor::fileNew()
     }
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::fileOpen()
+void MainWindow::fileOpen()
 {
     QString fn = QFileDialog::getOpenFileName(this, tr("Open File..."),
                  QString(), tr("HTML-Files (*.htm *.html);;All Files (*)"));
@@ -225,7 +232,7 @@ void HtmlEditor::fileOpen()
         load(fn);
 }
 ///-------------------------------------------------------------------------
-bool HtmlEditor::fileSave()
+bool MainWindow::fileSave()
 {
     if (fileName.isEmpty() || fileName.startsWith(QLatin1String(":/")))
         return fileSaveAs();
@@ -244,7 +251,7 @@ bool HtmlEditor::fileSave()
     return success;
 }
 ///-------------------------------------------------------------------------
-bool HtmlEditor::fileSaveAs()
+bool MainWindow::fileSaveAs()
 {
     QString fn = QFileDialog::getSaveFileName(this, tr("Save as..."),
                  QString(), tr("HTML-Files (*.htm *.html);;All Files (*)"));
@@ -256,7 +263,7 @@ bool HtmlEditor::fileSaveAs()
     return fileSave();
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::insertImage()
+void MainWindow::insertImage()
 {
     QString filters;
     filters += tr("Common Graphics (*.png *.jpg *.jpeg *.gif);;");
@@ -310,7 +317,7 @@ static QUrl guessUrlFromString(const QString &string)
     return QUrl(string, QUrl::TolerantMode);
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::createLink()
+void MainWindow::createLink()
 {
     QString link = QInputDialog::getText(this, tr("Create link"),
                                          "Enter URL");
@@ -321,7 +328,7 @@ void HtmlEditor::createLink()
     }
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::insertHtml()
+void MainWindow::insertHtml()
 {
     if (!insertHtmlDialog) {
         insertHtmlDialog = new QDialog(this);
@@ -344,7 +351,7 @@ void HtmlEditor::insertHtml()
     delete hilite;
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::zoomOut()
+void MainWindow::zoomOut()
 {
     int percent = static_cast<int>(ui->webView->zoomFactor() * 100);
     if (percent > 25) {
@@ -358,7 +365,7 @@ void HtmlEditor::zoomOut()
     }
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::zoomIn()
+void MainWindow::zoomIn()
 {
     int percent = static_cast<int>(ui->webView->zoomFactor() * 100);
     if (percent < 400) {
@@ -372,26 +379,26 @@ void HtmlEditor::zoomIn()
     }
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::editSelectAll()
+void MainWindow::editSelectAll()
 {
     ui->webView->triggerPageAction(QWebPage::SelectAll);
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::execCommand(const QString &cmd)
+void MainWindow::execCommand(const QString &cmd)
 {
     QWebFrame *frame = ui->webView->page()->mainFrame();
     QString js = QString("document.execCommand(\"%1\", false, null)").arg(cmd);
     frame->evaluateJavaScript(js);
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::execCommand(const QString &cmd, const QString &arg)
+void MainWindow::execCommand(const QString &cmd, const QString &arg)
 {
     QWebFrame *frame = ui->webView->page()->mainFrame();
     QString js = QString("document.execCommand(\"%1\", false, \"%2\")").arg(cmd).arg(arg);
     frame->evaluateJavaScript(js);
 }
 ///-------------------------------------------------------------------------
-bool HtmlEditor::queryCommandState(const QString &cmd)
+bool MainWindow::queryCommandState(const QString &cmd)
 {
     QWebFrame *frame = ui->webView->page()->mainFrame();
     QString js = QString("document.queryCommandState(\"%1\", false, null)").arg(cmd);
@@ -399,97 +406,97 @@ bool HtmlEditor::queryCommandState(const QString &cmd)
     return result.toString().simplified().toLower() == "true";
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::styleParagraph()
+void MainWindow::styleParagraph()
 {
     execCommand("formatBlock", "p");
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::styleHeading1()
+void MainWindow::styleHeading1()
 {
     execCommand("formatBlock", "h1");
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::styleHeading2()
+void MainWindow::styleHeading2()
 {
     execCommand("formatBlock", "h2");
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::styleHeading3()
+void MainWindow::styleHeading3()
 {
     execCommand("formatBlock", "h3");
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::styleHeading4()
+void MainWindow::styleHeading4()
 {
     execCommand("formatBlock", "h4");
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::styleHeading5()
+void MainWindow::styleHeading5()
 {
     execCommand("formatBlock", "h5");
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::styleHeading6()
+void MainWindow::styleHeading6()
 {
     execCommand("formatBlock", "h6");
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::stylePreformatted()
+void MainWindow::stylePreformatted()
 {
     execCommand("formatBlock", "pre");
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::styleAddress()
+void MainWindow::styleAddress()
 {
     execCommand("formatBlock", "address");
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::formatStrikeThrough()
+void MainWindow::formatStrikeThrough()
 {
     execCommand("strikeThrough");
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::formatAlignLeft()
+void MainWindow::formatAlignLeft()
 {
     execCommand("justifyLeft");
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::formatAlignCenter()
+void MainWindow::formatAlignCenter()
 {
     execCommand("justifyCenter");
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::formatAlignRight()
+void MainWindow::formatAlignRight()
 {
     execCommand("justifyRight");
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::formatAlignJustify()
+void MainWindow::formatAlignJustify()
 {
     execCommand("justifyFull");
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::formatIncreaseIndent()
+void MainWindow::formatIncreaseIndent()
 {
     execCommand("indent");
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::formatDecreaseIndent()
+void MainWindow::formatDecreaseIndent()
 {
     execCommand("outdent");
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::formatNumberedList()
+void MainWindow::formatNumberedList()
 {
     execCommand("insertOrderedList");
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::formatBulletedList()
+void MainWindow::formatBulletedList()
 {
     execCommand("insertUnorderedList");
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::formatFontName()
+void MainWindow::formatFontName()
 {
     QStringList families = QFontDatabase().families();
     bool ok = false;
@@ -500,7 +507,7 @@ void HtmlEditor::formatFontName()
         execCommand("fontName", family);
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::formatFontSize()
+void MainWindow::formatFontSize()
 {
     QStringList sizes;
     sizes << "xx-small";
@@ -519,14 +526,14 @@ void HtmlEditor::formatFontSize()
         execCommand("fontSize", QString::number(sizes.indexOf(size)));
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::formatTextColor()
+void MainWindow::formatTextColor()
 {
     QColor color = QColorDialog::getColor(Qt::black, this);
     if (color.isValid())
         execCommand("foreColor", color.name());
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::formatBackgroundColor()
+void MainWindow::formatBackgroundColor()
 {
     QColor color = QColorDialog::getColor(Qt::white, this);
     if (color.isValid())
@@ -535,7 +542,7 @@ void HtmlEditor::formatBackgroundColor()
 ///-------------------------------------------------------------------------
 #define FOLLOW_ENABLE(a1, a2) a1->setEnabled(ui->webView->pageAction(a2)->isEnabled())
 #define FOLLOW_CHECK(a1, a2) a1->setChecked(ui->webView->pageAction(a2)->isChecked())
-void HtmlEditor::adjustActions()
+void MainWindow::adjustActions()
 {
     FOLLOW_ENABLE(ui->actionEditUndo, QWebPage::Undo);
     FOLLOW_ENABLE(ui->actionEditRedo, QWebPage::Redo);
@@ -551,7 +558,7 @@ void HtmlEditor::adjustActions()
     ui->actionFormatBulletedList->setChecked(queryCommandState("insertUnorderedList"));
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::adjustSource()
+void MainWindow::adjustSource()
 {
     setWindowModified(true);
     sourceDirty = true;
@@ -560,7 +567,7 @@ void HtmlEditor::adjustSource()
         changeTab(1);
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::changeTab(int index)
+void MainWindow::changeTab(int index)
 {
     if (sourceDirty && (index == 1)) {
         QString content = ui->webView->page()->mainFrame()->toHtml();
@@ -569,7 +576,7 @@ void HtmlEditor::changeTab(int index)
     }
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::openLink(const QUrl &url)
+void MainWindow::openLink(const QUrl &url)
 {
     QString msg = QString(tr("Open %1 ?")).arg(url.toString());
     if (QMessageBox::question(this, tr("Open link"), msg,
@@ -578,7 +585,7 @@ void HtmlEditor::openLink(const QUrl &url)
         QDesktopServices::openUrl(url);
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::changeZoom(int percent)
+void MainWindow::changeZoom(int percent)
 {
     ui->actionZoomOut->setEnabled(percent > 25);
     ui->actionZoomIn->setEnabled(percent < 400);
@@ -589,7 +596,7 @@ void HtmlEditor::changeZoom(int percent)
     zoomSlider->setValue(percent);
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::closeEvent(QCloseEvent *e)
+void MainWindow::closeEvent(QCloseEvent *e)
 {
     if (maybeSave())
         e->accept();
@@ -597,7 +604,7 @@ void HtmlEditor::closeEvent(QCloseEvent *e)
         e->ignore();
 }
 ///-------------------------------------------------------------------------
-bool HtmlEditor::load(const QString &f)
+bool MainWindow::load(const QString &f)
 {
     if (!QFile::exists(f))
         return false;
@@ -615,7 +622,7 @@ bool HtmlEditor::load(const QString &f)
     return true;
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::setCurrentFileName(const QString &fileName)
+void MainWindow::setCurrentFileName(const QString &fileName)
 {
     this->fileName = fileName;
 
@@ -634,15 +641,28 @@ void HtmlEditor::setCurrentFileName(const QString &fileName)
     ui->actionFileSave->setEnabled(allowSave);
 }
 ///-------------------------------------------------------------------------
-void HtmlEditor::showAbout()
+void MainWindow::showAbout()
 {
     gui_about->show();
 }
 
 ///-------------------------------------------------------------------------
-void HtmlEditor::showHomePage()
+void MainWindow::showHomePage()
 {
     QDesktopServices::openUrl(QUrl(GL_WEBSITE));
 }
+
+///-------------------------------------------------------------------------
+void MainWindow::openProject()
+{
+
+}
+
+///-------------------------------------------------------------------------
+void MainWindow::saveProject()
+{
+
+}
+///-------------------------------------------------------------------------
 
 ///-------------------------------------------------------------------------
