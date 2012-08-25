@@ -31,18 +31,14 @@
 #include "highlighter.h"
 #include "defines.h" /// defines
 #include "about.h" /// about dialog
-#include "common.h" /// common function. example: parse project file
 #include "rightpanel.h"
 #include "leftpanel.h"
-
 
 #include <QtGui>
 #include <QtWebKit>
 #include <QDesktopServices> /// for open home page
-#include <QStandardItemModel>
 #include <QDockWidget>
-// debug
-#include <QDebug>
+#include <QDebug> // debug. Print in qDebug()
 
 #define FORWARD_ACTION(action1, action2) \
     connect(action1, SIGNAL(triggered()), \
@@ -62,7 +58,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     init();
-createConnect();
+    createActions();
+    createTrayIcon(); // add actionts to tray menu
+    createConnect();
+
 
     setCurrentFileName(QString());
 
@@ -158,6 +157,8 @@ void MainWindow::createConnect()
 
     connect(ui->actionViewLeftPanel, SIGNAL(toggled(bool)), dwLeft, SLOT(setVisible(bool)));
     connect(ui->actionViewRightPanel, SIGNAL(toggled(bool)), dwRight, SLOT(setVisible(bool)));
+
+    connect(trIcon,SIGNAL(activated(QSystemTrayIcon::ActivationReason)),this,SLOT(showHide(QSystemTrayIcon::ActivationReason)));
 
 }
 ///-------------------------------------------------------------------------
@@ -710,39 +711,51 @@ void MainWindow::saveProject()
 ///-------------------------------------------------------------------------
 void MainWindow::openProject(QString file)
 {
-//    qDebug() << "load file = " << file;
-    parseProjectFile(file);
+    gui_leftPanel->loadProject(file);
+}
+///-------------------------------------------------------------------------
+void MainWindow::showHide(QSystemTrayIcon::ActivationReason r)
+{
+    if (r == QSystemTrayIcon::Trigger)
+    {
+        if ( !this->isVisible() )
+        {
+            this->show();
+        }
+        else
+        {
+            this->hide();
+        }
+    }
+}
+///-------------------------------------------------------------------------
+void MainWindow::createTrayIcon()
+{
+    trIcon = new QSystemTrayIcon();  //init
+    trIcon->setIcon(QIcon(":/images/img.png"));  //set ico
 
+    trayIconMenu = new QMenu(this);  // create menu
+    trayIconMenu->addAction(minimizeAction);
+    trayIconMenu->addAction(maximizeAction);
+    trayIconMenu->addAction(restoreAction);
+    trayIconMenu->addSeparator();
+    trayIconMenu->addAction(quitAction);
 
+    trIcon->setContextMenu(trayIconMenu); //set menu
+}
+///-------------------------------------------------------------------------
+void MainWindow::createActions()
+{
+    minimizeAction = new QAction(tr("&Hide"), this);
+    connect(minimizeAction, SIGNAL(triggered()), this, SLOT(hide()));
 
-//    QStandardItemModel model( 5, 2, this);
-//    for( int r=0; r<5; r++ )
-//      for( int c=0; c<2; c++)
-//      {
-//        QStandardItem *item = new QStandardItem( QString("Row:%0, Column:%1").arg(r).arg(c) );
+    maximizeAction = new QAction(tr("&Expand"), this);
+    connect(maximizeAction, SIGNAL(triggered()), this, SLOT(showMaximized()));
 
-//        if( c == 0 )
-//          for( int i=0; i<3; i++ )
-//          {
-//            QStandardItem *child = new QStandardItem( QString("Item %0").arg(i) );
-//            child->setEditable( false );
-//            item->appendRow( child );
-//          }
+    restoreAction = new QAction(tr("&Restore"), this);
+    connect(restoreAction, SIGNAL(triggered()), this, SLOT(showNormal()));
 
-//        model.setItem(r, c, item);
-//      }
-//    ui->treeView->setModel(&model);
-
-//    QStandardItemModel model;
-//    QStandardItem *parentItem = model.invisibleRootItem();
-//    for (int i = 0; i < 4; ++i) {
-//        QStandardItem *item = new QStandardItem(QString("item %0").arg(i));
-//        parentItem->appendRow(item);
-//        parentItem = item;
-//    }
-
-//    ui->treeView->setModel(&model);
-//    ui->treeView->reset();
-
+    quitAction = new QAction(tr("Q&uit"), this);
+    connect(quitAction, SIGNAL(triggered()), this, SLOT(close()));
 }
 ///-------------------------------------------------------------------------

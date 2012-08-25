@@ -47,8 +47,7 @@ class QUrl;
 class RightPanel;
 class LeftPanel;
 
-
-
+#include <QSystemTrayIcon>
 
 class MainWindow : public QMainWindow
 {
@@ -62,8 +61,27 @@ protected:
     virtual void closeEvent(QCloseEvent *e);
 
 private:
+    /**
+      @function
+      Create connects
+      */
     void createConnect();
+    /**
+      @function
+      Create actions for tray
+      */
+    void createActions();
+    /**
+      @function
+      Init
+      */
     void init();
+    /**
+      @function
+      Create tray
+      */
+    void createTrayIcon(); // add actionts to tray menu
+
     void debug();
     void setupActions();
     void setupToolBar();
@@ -115,6 +133,12 @@ private slots:
       Function for save as file
       */
     bool fileSaveAs();
+    ///tray
+    /**
+      @function
+      Hide UI
+      */
+    void showHide(QSystemTrayIcon::ActivationReason);
 
 
     void editSelectAll();
@@ -180,6 +204,14 @@ private:
     LeftPanel *gui_leftPanel;
 
     QDockWidget *dwLeft, *dwRight; /// dockwidget (panels)
+
+    //tray
+    QSystemTrayIcon *trIcon;
+    QMenu *trayIconMenu;
+    QAction *minimizeAction;
+    QAction *maximizeAction;
+    QAction *restoreAction;
+    QAction *quitAction;
 
 };
 

@@ -27,6 +27,7 @@
         <file>images/list-add.png</file>
         <file>images/insert-html.png</file>
         <file>logo/qtlogo.png</file>
+        <file>images/img.png</file>
     </qresource>
     <qresource prefix="/files">
         <file>files/example.html</file>
