@@ -7,7 +7,7 @@
         <location filename="../../src/dialogs/about/about.ui" line="14"/>
         <location filename="../../src/dialogs/about/about.ui" line="24"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>О программе</translation>
     </message>
     <message utf8="true">
         <location filename="../../src/dialogs/about/about.ui" line="30"/>
@@ -30,7 +30,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/dialogs/about/about.ui" line="51"/>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>Лицензия</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/about/about.ui" line="57"/>
@@ -130,7 +130,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/dialogs/about/about.ui" line="155"/>
         <source>Developers</source>
-        <translation type="unfinished"></translation>
+        <translation>Разработчики</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/about/about.ui" line="161"/>
@@ -153,7 +153,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/dialogs/about/about.ui" line="182"/>
         <source>Thanks</source>
-        <translation type="unfinished"></translation>
+        <translation>Благодарности</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/about/about.ui" line="188"/>
@@ -185,12 +185,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/dialogs/inserthtmldialog.ui" line="14"/>
         <source>Insert HTML</source>
-        <translation type="unfinished"></translation>
+        <translation>Ввод HTML</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/inserthtmldialog.ui" line="20"/>
         <source>HTML Code:</source>
-        <translation type="unfinished"></translation>
+        <translation>HTML-код:</translation>
     </message>
 </context>
 <context>
@@ -198,12 +198,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/panel/leftpanel/leftpanel.ui" line="20"/>
         <source>Left panel</source>
-        <translation type="unfinished"></translation>
+        <translation>Левая панель</translation>
     </message>
     <message>
         <location filename="../../src/panel/leftpanel/leftpanel.ui" line="32"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Лево</translation>
     </message>
 </context>
 <context>
@@ -216,32 +216,32 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="34"/>
         <source>Tab 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкладка 1</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="41"/>
         <source>about:blank</source>
-        <translation type="unfinished"></translation>
+        <translation>about:blank</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="50"/>
         <source>Tab 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкладка 2</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="80"/>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Файл</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="94"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Правка</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="111"/>
         <source>F&amp;ormat</source>
-        <translation type="unfinished"></translation>
+        <translation>Ф&amp;ормат</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="115"/>
@@ -251,64 +251,64 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="129"/>
         <source>&amp;Align</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Выравнивание</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="158"/>
         <location filename="../../src/mainwindow/mainwindow.ui" line="629"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>О программе</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="167"/>
         <location filename="../../src/mainwindow/mainwindow.ui" line="655"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="173"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Язык</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="180"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Просмотр</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="184"/>
         <source>Panels</source>
-        <translation type="unfinished"></translation>
+        <translation>Панели</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="201"/>
         <source>Standard</source>
-        <translation type="unfinished"></translation>
+        <translation>Стандарт</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="225"/>
         <source>Formatting</source>
-        <translation type="unfinished"></translation>
+        <translation>Форматирование</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="259"/>
         <source>&amp;New</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Новый</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="262"/>
         <source>Ctrl+N</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+N</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="271"/>
         <source>&amp;Open...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Открыть</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="274"/>
         <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+O</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="283"/>
@@ -318,62 +318,62 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="286"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="291"/>
         <source>Save &amp;As...</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить &amp;как ...</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="300"/>
         <source>&amp;Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Отменить</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="303"/>
         <source>Ctrl+Z</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Z</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="312"/>
         <source>&amp;Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Вернуть</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="315"/>
         <source>Ctrl+Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Y</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="324"/>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"></translation>
+        <translation>Выре&amp;зать</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="327"/>
         <source>Ctrl+X</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+X</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="336"/>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Копировать</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="339"/>
         <source>Ctrl+C</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+C</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="348"/>
         <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>В&amp;ставить</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="351"/>
         <source>Ctrl+V</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+V</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow/mainwindow.ui" line="360"/>

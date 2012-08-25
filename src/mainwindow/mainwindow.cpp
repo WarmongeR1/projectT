@@ -74,8 +74,6 @@ createConnect();
     if (!load(initialFile))
         fileNew();
 
-
-
     adjustActions();
     adjustSource();
     setWindowModified(false);
@@ -195,7 +193,7 @@ void MainWindow::init()
     dwLeft = new QDockWidget(this);
     dwLeft -> setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
     dwLeft -> setWindowTitle(tr("Left panel"));
-    dwLeft -> setObjectName(QString("sidebar"));
+    dwLeft -> setObjectName(QString("leftsidebar"));
     gui_leftPanel = new LeftPanel(dwLeft, this);
     dwLeft -> setWidget(gui_leftPanel);
     dwLeft ->setMaximumWidth (350);
@@ -203,22 +201,24 @@ void MainWindow::init()
 
 
     dwRight = new QDockWidget(this);
-    dwRight -> setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
-    dwRight -> setWindowTitle(tr("Right panel"));
-    dwRight -> setObjectName(QString("rightpanel"));
+//    dwRight -> setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
+//    dwRight -> setWindowTitle(tr("Right panel"));
+//    dwRight -> setObjectName(QString("rightpanel"));
     gui_rightPanel = new RightPanel(dwRight, this);
-    dwRight -> setWidget(gui_rightPanel);
-    dwRight->setMaximumWidth (350);
+//    dwRight -> setWidget(gui_rightPanel);
+//    dwRight->setMaximumWidth (350);
     addDockWidget(Qt::RightDockWidgetArea, dwRight);
 
     /// вынести в файл настроек
     ui->actionViewLeftPanel->setChecked(true);
-    ui->actionViewRightPanel->setChecked(true);
-    ui->actionLanguageEnglish->setChecked(true);
+    ui->actionViewRightPanel->setChecked(false);
+    dwRight->setVisible(false);
+//    ui->actionLanguageEnglish->setChecked(true);
 }
 ///-------------------------------------------------------------------------
 void MainWindow::debug()
 {
+    qDebug() << "Activate debug: mainwindow";
     QString projectFileForOpen = "/home/files/Develop/git/projectT/master/projectT-build-desktop/build/bin/example.qhp";
     openProject(projectFileForOpen);
 }
