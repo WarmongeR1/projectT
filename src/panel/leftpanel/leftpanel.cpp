@@ -73,21 +73,6 @@ void LeftPanel::debug()
     ui->treeViewProject->setModel(standardModel);
     ui->treeViewProject->expandAll();
 
-    //    ui->treeView->setModel(&model);
-    ui->treeViewProject->setModel(&model);
-
-
-    //    QStandardItemModel model;
-    //    QStandardItem *parentItem = model.invisibleRootItem();
-    //    for (int i = 0; i < 4; ++i) {
-    //        QStandardItem *item = new QStandardItem(QString("item %0").arg(i));
-    //        parentItem->appendRow(item);
-    //        parentItem = item;
-    //    }
-
-    //    ui->treeView->setModel(&model);
-    //    ui->treeView->reset();
-
 }
 ///----------------------------------------------------------------------------
 
