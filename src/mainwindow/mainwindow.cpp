@@ -211,9 +211,10 @@ void MainWindow::init()
     dwRight->setMaximumWidth (350);
     addDockWidget(Qt::RightDockWidgetArea, dwRight);
 
+    /// вынести в файл настроек
     ui->actionViewLeftPanel->setChecked(true);
     ui->actionViewRightPanel->setChecked(true);
-
+    ui->actionLanguageEnglish->setChecked(true);
 }
 ///-------------------------------------------------------------------------
 void MainWindow::debug()

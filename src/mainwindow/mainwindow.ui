@@ -635,11 +635,17 @@
    </property>
   </action>
   <action name="actionLanguageRussian">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Russian</string>
    </property>
   </action>
   <action name="actionLanguageEnglish">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>English</string>
    </property>

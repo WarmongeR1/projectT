@@ -60,3 +60,6 @@ FORMS     += \
 
 RESOURCES += \
     resources/resources.qrc
+
+TRANSLATIONS += \
+    resources/lang/projectT_ru.ts
