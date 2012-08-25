@@ -32,12 +32,15 @@
 #include "defines.h" /// defines
 #include "about.h" /// about dialog
 #include "common.h" /// common function. example: parse project file
+#include "rightpanel.h"
+#include "leftpanel.h"
+
 
 #include <QtGui>
 #include <QtWebKit>
 #include <QDesktopServices> /// for open home page
 #include <QStandardItemModel>
-
+#include <QDockWidget>
 // debug
 #include <QDebug>
 
@@ -59,7 +62,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     init();
-    createConnect();
+createConnect();
 
     setCurrentFileName(QString());
 
@@ -71,15 +74,13 @@ MainWindow::MainWindow(QWidget *parent)
     if (!load(initialFile))
         fileNew();
 
+
+
     adjustActions();
     adjustSource();
     setWindowModified(false);
     changeZoom(100);
-
-
-
     this->showMaximized();
-
     debug();
 }
 ///-------------------------------------------------------------------------
@@ -156,6 +157,10 @@ void MainWindow::createConnect()
     connect(ui->webView->page(), SIGNAL(selectionChanged()), SLOT(adjustActions()));
 
     connect(ui->webView->page(), SIGNAL(contentsChanged()), SLOT(adjustSource()));
+
+    connect(ui->actionViewLeftPanel, SIGNAL(toggled(bool)), dwLeft, SLOT(setVisible(bool)));
+    connect(ui->actionViewRightPanel, SIGNAL(toggled(bool)), dwRight, SLOT(setVisible(bool)));
+
 }
 ///-------------------------------------------------------------------------
 void MainWindow::init()
@@ -186,6 +191,28 @@ void MainWindow::init()
     ui->standardToolBar->insertWidget(ui->actionZoomIn, zoomSlider);
 
     ui->webView->setFocus();
+
+    dwLeft = new QDockWidget(this);
+    dwLeft -> setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
+    dwLeft -> setWindowTitle(tr("Left panel"));
+    dwLeft -> setObjectName(QString("sidebar"));
+    gui_leftPanel = new LeftPanel(dwLeft, this);
+    dwLeft -> setWidget(gui_leftPanel);
+    dwLeft ->setMaximumWidth (350);
+    addDockWidget(Qt::LeftDockWidgetArea, dwLeft);
+
+
+    dwRight = new QDockWidget(this);
+    dwRight -> setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
+    dwRight -> setWindowTitle(tr("Right panel"));
+    dwRight -> setObjectName(QString("rightpanel"));
+    gui_rightPanel = new RightPanel(dwRight, this);
+    dwRight -> setWidget(gui_rightPanel);
+    dwRight->setMaximumWidth (350);
+    addDockWidget(Qt::RightDockWidgetArea, dwRight);
+
+    ui->actionViewLeftPanel->setChecked(true);
+    ui->actionViewRightPanel->setChecked(true);
 
 }
 ///-------------------------------------------------------------------------

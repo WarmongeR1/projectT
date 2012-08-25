@@ -16,7 +16,9 @@ INCLUDEPATH = \
     src/highlighter \
     src/mainwindow \
     src/common \
-    src/defines
+    src/defines \
+    src/panel/leftpanel \
+    src/panel/rightpanel
 
 DEPENDPATH += \
     src \
@@ -26,7 +28,9 @@ DEPENDPATH += \
     src/highlighter \
     src/mainwindow \
     src/common \
-    src/defines
+    src/defines \
+    src/panel/leftpanel \
+    src/panel/rightpanel
 
 
 HEADERS   += \
@@ -34,20 +38,25 @@ HEADERS   += \
 	highlighter.h \
 	about.h \
 	common.h \
-    defines.h
+    defines.h \
+    src/panel/rightpanel/rightpanel.h \
+    src/panel/leftpanel/leftpanel.h
 
 SOURCES   += \
 	mainwindow.cpp \
 	main.cpp \
 	highlighter.cpp \
 	about.cpp \
-	common.cpp
+	common.cpp \
+    src/panel/rightpanel/rightpanel.cpp \
+    src/panel/leftpanel/leftpanel.cpp
 
 FORMS     += \
 	mainwindow.ui \
 	inserthtmldialog.ui \
-	about.ui
+	about.ui \
+    src/panel/rightpanel/rightpanel.ui \
+    src/panel/leftpanel/leftpanel.ui
 
 RESOURCES += \
     resources/resources.qrc
-

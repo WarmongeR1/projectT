@@ -44,7 +44,8 @@ class AboutDialog;
 class QLabel;
 class QSlider;
 class QUrl;
-
+class RightPanel;
+class LeftPanel;
 
 
 
@@ -175,6 +176,10 @@ private:
     QDialog *insertHtmlDialog;
 
     AboutDialog *gui_about; // about dialog
+    RightPanel *gui_rightPanel;
+    LeftPanel *gui_leftPanel;
+
+    QDockWidget *dwLeft, *dwRight; /// dockwidget (panels)
 
 };
 
