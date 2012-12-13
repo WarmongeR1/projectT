@@ -36,6 +36,7 @@ private:
       Set test params and other
       */
     void debug();
+    QString filename;
 };
 
 #endif // LEFTPANEL_H

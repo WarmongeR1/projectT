@@ -42,7 +42,7 @@
                     <section title="Шаг 1" ref="./resources/howto/expmod/step1.html"></section>
                 </section>
             </section>
-            </toc>
+        </toc>
         <keywords>
             <keyword name="Display" ref="./resources/old/index_ru.html"/>
             <keyword name="Rich text" ref="./resources/old/index_ru.html"/>

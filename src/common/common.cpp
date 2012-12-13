@@ -3,6 +3,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QTextCodec>
+#include <QStandardItem>
 
 #include <QDebug>
 
@@ -49,10 +50,10 @@ QTextCodec * getCodecOfEncoding(QString encoding)
 QStandardItemModel* parseProjectFile(QString filename)
 {
     QString text = getTextFromFile(filename);
-//    qDebug() << "namespace = " << getNamespace(&text);
-//    qDebug() << "virtualFolder=  " << getVirtualFolder(&text);
-//    qDebug() << "files = " << parseFiles(&text);
-//    QString str = "";
+    //    qDebug() << "namespace = " << getNamespace(&text);
+    //    qDebug() << "virtualFolder=  " << getVirtualFolder(&text);
+    //    qDebug() << "files = " << parseFiles(&text);
+    //    QString str = "";
     QStandardItemModel *model;
     return model;
 }
@@ -89,14 +90,39 @@ QString getParamProject(QString *mtext, QString param)
     return str;
 }
 ///---------------------------------------------
-void parseFilterSection(QString *text)
+void parseFilterSection(QString *mtext)
 {
 
 }
 ///---------------------------------------------
-void parseToc(QString *text)
+QStandardItemModel* parseToc(QString *mtext)
 {
+    QString text = *mtext;
+    int posBegin = text.indexOf("<toc>");
+    int posEnd = text.indexOf("</toc>", posBegin);
+    QString tocText = text.mid(posBegin + QString("<toc>").length(),
+                               posEnd - posBegin
+                               - QString("<toc>").length());
 
+//    qDebug() << tocText;
+
+
+    QStringList tocList = tocText.split("\n");
+//    qDebug() << "tocList = " << tocList;
+    for (int i = 0; i < tocList.size(); i++)
+    {
+        qDebug() << "at(" << i << ") = " << tocList.at(i);
+    }
+
+    QStandardItemModel *standardModel =  new QStandardItemModel ;
+
+
+
+    QStandardItem *rootNode = standardModel->invisibleRootItem();
+    QStandardItem *americaItem = new QStandardItem("America");
+    rootNode->appendRow(americaItem);
+
+    return standardModel;
 }
 ///---------------------------------------------
 QStringList parseFiles(QString *mtext)
@@ -213,3 +239,6 @@ QString relatifyFileName(QString url, QString path)
     }
     return str;
 }	//relatifyFileName
+
+
+//QStringList

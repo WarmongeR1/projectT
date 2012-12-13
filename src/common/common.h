@@ -50,7 +50,7 @@ void parseFilterSection(QString *text);
   Parse block <toc> </toc>
   @param *text
   */
-void parseToc(QString *text);
+QStandardItemModel* parseToc(QString *text);
 
 
 /**
