@@ -38,7 +38,7 @@
 #include <QtWebKit>
 #include <QDesktopServices> /// for open home page
 #include <QDockWidget>
-#include <QDebug> // debug. Print in qDebug()
+#include "debughelper.h"
 
 #define FORWARD_ACTION(action1, action2) \
     connect(action1, SIGNAL(triggered()), \
@@ -80,13 +80,13 @@ MainWindow::MainWindow(QWidget *parent)
     this->showMaximized();
     debug();
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 MainWindow::~MainWindow()
 {
     delete ui;
     delete ui_dialog;
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::createConnect()
 {
 
@@ -161,7 +161,7 @@ void MainWindow::createConnect()
     connect(trIcon,SIGNAL(activated(QSystemTrayIcon::ActivationReason)),this,SLOT(showHide(QSystemTrayIcon::ActivationReason)));
 
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::init()
 {
     gui_about = new AboutDialog(this);
@@ -216,14 +216,15 @@ void MainWindow::init()
     dwRight->setVisible(false);
 //    ui->actionLanguageEnglish->setChecked(true);
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::debug()
 {
-    qDebug() << "Activate debug: mainwindow";
-    QString projectFileForOpen = "/home/files/Develop/git/projectT/master/projectT-build-desktop/build/bin/example.qhp";
+    myDebug() << "Activate debug: mainwindow";
+    QString projectFileForOpen = QDir::currentPath() + "/example.qhp";
+    myDebug() << projectFileForOpen;
     openProject(projectFileForOpen);
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 bool MainWindow::maybeSave()
 {
     if (!isWindowModified())
@@ -241,7 +242,7 @@ bool MainWindow::maybeSave()
         return false;
     return true;
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::fileNew()
 {
     if (maybeSave()) {
@@ -265,7 +266,7 @@ void MainWindow::fileNew()
         QApplication::postEvent(ui->webView, e2);
     }
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::fileOpen()
 {
     QString fn = QFileDialog::getOpenFileName(this, tr("Open File..."),
@@ -273,7 +274,7 @@ void MainWindow::fileOpen()
     if (!fn.isEmpty())
         load(fn);
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 bool MainWindow::fileSave()
 {
     if (fileName.isEmpty() || fileName.startsWith(QLatin1String(":/")))
@@ -292,7 +293,7 @@ bool MainWindow::fileSave()
     setWindowModified(false);
     return success;
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 bool MainWindow::fileSaveAs()
 {
     QString fn = QFileDialog::getSaveFileName(this, tr("Save as..."),
@@ -304,7 +305,7 @@ bool MainWindow::fileSaveAs()
     setCurrentFileName(fn);
     return fileSave();
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::insertImage()
 {
     QString filters;
@@ -324,7 +325,7 @@ void MainWindow::insertImage()
     QUrl url = QUrl::fromLocalFile(fn);
     execCommand("insertImage", url.toString());
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 // shamelessly copied from Qt Demo Browser
 static QUrl guessUrlFromString(const QString &string)
 {
@@ -358,7 +359,7 @@ static QUrl guessUrlFromString(const QString &string)
     // Fall back to QUrl's own tolerant parser.
     return QUrl(string, QUrl::TolerantMode);
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::createLink()
 {
     QString link = QInputDialog::getText(this, tr("Create link"),
@@ -369,7 +370,7 @@ void MainWindow::createLink()
             execCommand("createLink", url.toString());
     }
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::insertHtml()
 {
     if (!insertHtmlDialog) {
@@ -392,7 +393,7 @@ void MainWindow::insertHtml()
 
     delete hilite;
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::zoomOut()
 {
     int percent = static_cast<int>(ui->webView->zoomFactor() * 100);
@@ -406,7 +407,7 @@ void MainWindow::zoomOut()
         zoomSlider->setValue(percent);
     }
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::zoomIn()
 {
     int percent = static_cast<int>(ui->webView->zoomFactor() * 100);
@@ -420,26 +421,26 @@ void MainWindow::zoomIn()
         zoomSlider->setValue(percent);
     }
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::editSelectAll()
 {
     ui->webView->triggerPageAction(QWebPage::SelectAll);
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::execCommand(const QString &cmd)
 {
     QWebFrame *frame = ui->webView->page()->mainFrame();
     QString js = QString("document.execCommand(\"%1\", false, null)").arg(cmd);
     frame->evaluateJavaScript(js);
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::execCommand(const QString &cmd, const QString &arg)
 {
     QWebFrame *frame = ui->webView->page()->mainFrame();
     QString js = QString("document.execCommand(\"%1\", false, \"%2\")").arg(cmd).arg(arg);
     frame->evaluateJavaScript(js);
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 bool MainWindow::queryCommandState(const QString &cmd)
 {
     QWebFrame *frame = ui->webView->page()->mainFrame();
@@ -447,97 +448,97 @@ bool MainWindow::queryCommandState(const QString &cmd)
     QVariant result = frame->evaluateJavaScript(js);
     return result.toString().simplified().toLower() == "true";
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::styleParagraph()
 {
     execCommand("formatBlock", "p");
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::styleHeading1()
 {
     execCommand("formatBlock", "h1");
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::styleHeading2()
 {
     execCommand("formatBlock", "h2");
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::styleHeading3()
 {
     execCommand("formatBlock", "h3");
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::styleHeading4()
 {
     execCommand("formatBlock", "h4");
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::styleHeading5()
 {
     execCommand("formatBlock", "h5");
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::styleHeading6()
 {
     execCommand("formatBlock", "h6");
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::stylePreformatted()
 {
     execCommand("formatBlock", "pre");
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::styleAddress()
 {
     execCommand("formatBlock", "address");
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::formatStrikeThrough()
 {
     execCommand("strikeThrough");
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::formatAlignLeft()
 {
     execCommand("justifyLeft");
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::formatAlignCenter()
 {
     execCommand("justifyCenter");
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::formatAlignRight()
 {
     execCommand("justifyRight");
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::formatAlignJustify()
 {
     execCommand("justifyFull");
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::formatIncreaseIndent()
 {
     execCommand("indent");
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::formatDecreaseIndent()
 {
     execCommand("outdent");
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::formatNumberedList()
 {
     execCommand("insertOrderedList");
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::formatBulletedList()
 {
     execCommand("insertUnorderedList");
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::formatFontName()
 {
     QStringList families = QFontDatabase().families();
@@ -548,7 +549,7 @@ void MainWindow::formatFontName()
     if (ok)
         execCommand("fontName", family);
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::formatFontSize()
 {
     QStringList sizes;
@@ -567,21 +568,21 @@ void MainWindow::formatFontSize()
     if (ok)
         execCommand("fontSize", QString::number(sizes.indexOf(size)));
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::formatTextColor()
 {
     QColor color = QColorDialog::getColor(Qt::black, this);
     if (color.isValid())
         execCommand("foreColor", color.name());
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::formatBackgroundColor()
 {
     QColor color = QColorDialog::getColor(Qt::white, this);
     if (color.isValid())
         execCommand("hiliteColor", color.name());
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 #define FOLLOW_ENABLE(a1, a2) a1->setEnabled(ui->webView->pageAction(a2)->isEnabled())
 #define FOLLOW_CHECK(a1, a2) a1->setChecked(ui->webView->pageAction(a2)->isChecked())
 void MainWindow::adjustActions()
@@ -599,7 +600,7 @@ void MainWindow::adjustActions()
     ui->actionFormatNumberedList->setChecked(queryCommandState("insertOrderedList"));
     ui->actionFormatBulletedList->setChecked(queryCommandState("insertUnorderedList"));
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::adjustSource()
 {
     setWindowModified(true);
@@ -608,7 +609,7 @@ void MainWindow::adjustSource()
     if (ui->tabWidget->currentIndex() == 1)
         changeTab(1);
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::changeTab(int index)
 {
     if (sourceDirty && (index == 1)) {
@@ -617,7 +618,7 @@ void MainWindow::changeTab(int index)
         sourceDirty = false;
     }
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::openLink(const QUrl &url)
 {
     QString msg = QString(tr("Open %1 ?")).arg(url.toString());
@@ -626,7 +627,7 @@ void MainWindow::openLink(const QUrl &url)
             QMessageBox::Open)
         QDesktopServices::openUrl(url);
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::changeZoom(int percent)
 {
     ui->actionZoomOut->setEnabled(percent > 25);
@@ -637,7 +638,7 @@ void MainWindow::changeZoom(int percent)
     zoomLabel->setText(tr(" Zoom: %1% ").arg(percent));
     zoomSlider->setValue(percent);
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::closeEvent(QCloseEvent *e)
 {
     if (maybeSave())
@@ -645,7 +646,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
     else
         e->ignore();
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 bool MainWindow::load(const QString &f)
 {
     if (!QFile::exists(f))
@@ -663,7 +664,7 @@ bool MainWindow::load(const QString &f)
     setCurrentFileName(f);
     return true;
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::setCurrentFileName(const QString &fileName)
 {
     this->fileName = fileName;
@@ -682,19 +683,19 @@ void MainWindow::setCurrentFileName(const QString &fileName)
         allowSave = false;
     ui->actionFileSave->setEnabled(allowSave);
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::showAbout()
 {
     gui_about->show();
 }
 
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::showHomePage()
 {
     QDesktopServices::openUrl(QUrl(GL_WEBSITE));
 }
 
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::openProject()
 {
     QString fn = QFileDialog::getOpenFileName(this, tr("Open File..."),
@@ -703,17 +704,17 @@ void MainWindow::openProject()
         openProject(fn);
 }
 
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::saveProject()
 {
-    qDebug() << "save Project";
+    myDebug() << "save Project";
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::openProject(QString file)
 {
     gui_leftPanel->loadProject(file);
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::showHide(QSystemTrayIcon::ActivationReason r)
 {
     if (r == QSystemTrayIcon::Trigger)
@@ -728,7 +729,7 @@ void MainWindow::showHide(QSystemTrayIcon::ActivationReason r)
         }
     }
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::createTrayIcon()
 {
     trIcon = new QSystemTrayIcon();  //init
@@ -743,7 +744,7 @@ void MainWindow::createTrayIcon()
 
     trIcon->setContextMenu(trayIconMenu); //set menu
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 void MainWindow::createActions()
 {
     minimizeAction = new QAction(tr("&Hide"), this);
@@ -758,4 +759,4 @@ void MainWindow::createActions()
     quitAction = new QAction(tr("Q&uit"), this);
     connect(quitAction, SIGNAL(triggered()), this, SLOT(close()));
 }
-///-------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------

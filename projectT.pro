@@ -18,7 +18,8 @@ INCLUDEPATH = \
     src/common \
     src/defines \
     src/panel/leftpanel \
-    src/panel/rightpanel
+    src/panel/rightpanel \
+    src/debughelper
 
 DEPENDPATH += \
     src \
@@ -30,33 +31,36 @@ DEPENDPATH += \
     src/common \
     src/defines \
     src/panel/leftpanel \
-    src/panel/rightpanel
+    src/panel/rightpanel \
+    src/debughelper
 
 
 HEADERS   += \
-	mainwindow.h \
-	highlighter.h \
-	about.h \
-	common.h \
-    defines.h \
-    src/panel/rightpanel/rightpanel.h \
-    src/panel/leftpanel/leftpanel.h
+        mainwindow.h \
+        highlighter.h \
+        about.h \
+        common.h \
+        defines.h \
+        rightpanel.h \
+        leftpanel.h \
+        debughelper.h
 
 SOURCES   += \
-	mainwindow.cpp \
-	main.cpp \
-	highlighter.cpp \
-	about.cpp \
-	common.cpp \
-    src/panel/rightpanel/rightpanel.cpp \
-    src/panel/leftpanel/leftpanel.cpp
+        mainwindow.cpp \
+        main.cpp \
+        highlighter.cpp \
+        about.cpp \
+        common.cpp \
+        rightpanel.cpp \
+        leftpanel.cpp \
+        debughelper.cpp
 
 FORMS     += \
-	mainwindow.ui \
-	inserthtmldialog.ui \
-	about.ui \
-    src/panel/rightpanel/rightpanel.ui \
-    src/panel/leftpanel/leftpanel.ui
+        mainwindow.ui \
+        inserthtmldialog.ui \
+        about.ui \
+        rightpanel.ui \
+        leftpanel.ui
 
 RESOURCES += \
     resources/resources.qrc
