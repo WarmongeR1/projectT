@@ -1,20 +1,21 @@
-# Compiled Object files
+# C++ objects and libs
+
 *.slo
 *.lo
 *.o
-
-# settings
-*.user
-#
-
-# Vim
-*.*~
-*.md.*
-*.*.swp
-# Compiled Dynamic libraries
-*.so
-
-# Compiled Static libraries
-*.lai
-*.la
 *.a
+*.la
+*.lai
+*.so
+*.dll
+*.dylib
+
+# Qt-es
+
+*.pro.user
+*.pro.user.*
+moc_*.cpp
+qrc_*.cpp
+Makefile
+*build*
+
