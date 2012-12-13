@@ -23,7 +23,7 @@ void LeftPanel::loadProject(QString file)
 {
     parseProjectFile(file);
     filename = file;
-    debug();
+//    debug();
 }
 ///----------------------------------------------------------------------------
 void LeftPanel::debug()
